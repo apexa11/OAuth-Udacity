@@ -23,7 +23,7 @@
           <div id="signInButton">
           <span class="g-signin"
             data-scope="openid email"
-            data-clientid="13140951618-15nik769cellkubaqnjk5facdib2dh4d.apps.googleusercontent.com"
+            data-clientid="1002371267276-adq0uqel7m1d0bk80pphi092gfa9qbaa.apps.googleusercontent.com"
             data-redirecturi="postmessage"
             data-accesstype="offline"
             data-cookiepolicy="single_host_origin"
@@ -31,14 +31,14 @@
             data-approvalprompt="force">
           </span>
         </div>
-        <div id="result"> </div>
+
+<div id="result"> </div>
 
 <script>
-function signInCallBack(authResult){
-  if(authResult['code']){
+function signInCallback(authResult) {
+  if (authResult['code']) {
     // Hide the sign-in button now that the user is authorized
     $('#signinButton').attr('style', 'display: none');
-
     // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
     $.ajax({
       type: 'POST',
@@ -52,7 +52,7 @@ function signInCallBack(authResult){
           $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
          setTimeout(function() {
           window.location.href = "/restaurant";
-         }, 4000);
+         }, 2000);
 
       } else if (authResult['error']) {
     console.log('There was an error: ' + authResult['error']);
@@ -62,6 +62,7 @@ function signInCallBack(authResult){
       }
 
   }); } }
+
 </script>
 
 
