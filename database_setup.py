@@ -41,8 +41,8 @@ class MenuItem(Base):
     price = Column(String(8))
     course = Column(String(250))
     restaurant_id = Column(Integer,ForeignKey('restaurant.id'))
-    user_id = Column(Integer,ForeignKey('user.id'))
     restaurant = relationship(Restaurant)
+    user_id = Column(Integer,ForeignKey('user.id'))
     user = relationship(User)
 
 

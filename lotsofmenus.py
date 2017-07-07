@@ -24,6 +24,8 @@ User1 = User(name="Robo Barista", email="tinnyTim@udacity.com",
 session.add(User1)
 session.commit()
 
+
+
 #Menu for UrbanBurger
 restaurant1 = Restaurant(user_id = 1,name = "Urban Burger")
 
