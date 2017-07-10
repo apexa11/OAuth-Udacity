@@ -113,10 +113,10 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
-    user_id = getUserId(data['email'])
+    user_id = getUserId(login_session['email'])
     if not user_id:
       user_id = createUser(login_session)
-      login_session.get['user_id'] = user_id
+      login_session['user_id'] = user_id
 
     output = ''
     output += '<h1>Welcome, '
@@ -268,9 +268,10 @@ def deleteRestaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    #protect all page with logged in user
     creator = getUserInfo(restaurant.user_id)
     items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
-    if 'username' not in login_session or creator.id != login_session.get['user_id']:
+    if 'username' not in login_session or creator.id != login_session['user_id']:
       return render_template('publicmenu.html',items = items , restaurant = restaurant, creator = creator)
     else:
       return render_template('menu.html', items = items, restaurant = restaurant, creator = creator)
