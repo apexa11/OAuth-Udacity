@@ -98,7 +98,7 @@ def gconnect():
         return response
 
     # Store the access token in the session for later use.
-    login_session['credentials'] = credentials.access_token
+    login_session['credentials'] = credentials
     login_session['gplus_id'] = gplus_id
 
 
@@ -113,10 +113,10 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
-    user_id = getUserId(login_session['email'])
+    user_id = getUserId(data['email'])
     if not user_id:
       user_id = createUser(login_session)
-      login_session['user_id'] = user_id
+      login_session.get['user_id'] = user_id
 
     output = ''
     output += '<h1>Welcome, '
@@ -270,7 +270,7 @@ def showMenu(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     creator = getUserInfo(restaurant.user_id)
     items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
-    if 'username' not in login_session:
+    if 'username' not in login_session or creator.id != login_session.get['user_id']:
       return render_template('publicmenu.html',items = items , restaurant = restaurant, creator = creator)
     else:
       return render_template('menu.html', items = items, restaurant = restaurant, creator = creator)
