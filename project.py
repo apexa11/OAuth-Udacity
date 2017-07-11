@@ -327,7 +327,7 @@ def editRestaurant(restaurant_id):
     return "<script> function myFunction(){ alert('you are not authorizd to Edit this restaurant. please create your own restaurant in order to delete it');}</script> <body onload = 'myFunction()'>"
   if request.method == 'POST':
       if request.form['name']:
-        editedRestaurant.name = request.form['name'] , user_id = login_session['user_id']
+        editedRestaurant.name = request.form['name']
         flash('Restaurant Successfully Edited %s' % editedRestaurant.name)
         return redirect(url_for('showRestaurants'))
       else:
