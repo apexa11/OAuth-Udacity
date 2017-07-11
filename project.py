@@ -107,11 +107,11 @@ def gconnect():
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
 
-    data = answer.json()
+    data = json.loads(answer.text)
 
-    login_session['username'] = data['name']
-    login_session['picture'] = data['picture']
-    login_session['email'] = data['email']
+    login_session['username'] = data["name"]
+    login_session['picture'] = data["picture"]
+    login_session['email'] = data["email"]
 
     user_id = getUserId(login_session['email'])
     if not user_id:
@@ -121,11 +121,13 @@ def gconnect():
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
+
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 100px; height: 100px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
+
     print "done!"
     return output
 
@@ -195,10 +197,10 @@ def fbconnect():
     access_token = request.data
     print "access token recived %s" % access_token
 
-    app_id = json.loads(open('fb_client_secrets.json', 'r').read())[
+    app_id = json.loads(open('fbclientsecrets.json', 'r').read())[
         'web']['app_id']
     app_secret = json.loads(
-        open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+        open('fbclientsecrets.json', 'r').read())['web']['app_secret']
     url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (
         app_id, app_secret, access_token)
     h = httplib2.Http()
@@ -238,7 +240,7 @@ def fbconnect():
     login_session['picture'] = data["data"]["url"]
 
     # see if user exists
-    user_id = getUserID(login_session['email'])
+    user_id = getUserId(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -250,7 +252,7 @@ def fbconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 100px; height: 100px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
 
     flash("Now logged in as %s" % login_session['username'])
     return output
@@ -303,7 +305,7 @@ def showRestaurants():
 def newRestaurant():
   if 'username' not in login_session:
     return redirect ('/login')
-    newRestaurant = Restaurant(name = request.form['name'] , user_id= login_session['user_id'])
+    newRestaurant = Restaurant(name = request.form['name'],user_id=login_session['user_id'])
   if newRestaurant.user_id != login_session['user_id']:
     return "<script> function myfunction(){ alert('you are not authorizd to add this restaurant. please create your own restaurant in order to delete it');}</script> <body onload = 'myfunction()'>"
   if request.method == 'POST':
@@ -339,7 +341,7 @@ def deleteRestaurant(restaurant_id):
     return redirect ('/login')
     restaurantToDelete = session.query(Restaurant).filter_by(id = restaurant_id).one()
   if restaurantToDelete.user_id != login_session['user_id']:
-    return "<script> function myfunction(){ alert('you are not authorizd to Edit this restaurant. please create your own restaurant in order to delete it');}</script> <body onload = 'myfunction()'>"
+    return "<script> function myFunction(){ alert('you are not authorizd to Edit this restaurant. please create your own restaurant in order to delete it');}</script> <body onload = 'myFunction()'>"
   if request.method == 'POST':
     session.delete(restaurantToDelete)
     flash('%s Successfully Deleted' % restaurantToDelete.name)
@@ -357,7 +359,7 @@ def showMenu(restaurant_id):
     creator = getUserInfo(restaurant.user_id)
     items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
     if 'username' not in login_session or creator.id != login_session['user_id']:
-      return render_template('publicmenu.html',items = items , restaurant = restaurant, creator = creator)
+      return render_template('publicmenu.html',items = items , restaurant = restaurant,creator = creator)
     else:
       return render_template('menu.html', items = items, restaurant = restaurant, creator = creator)
 

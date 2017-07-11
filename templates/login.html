@@ -22,7 +22,7 @@
 
           <div id="signInButton">
           <span class="g-signin"
-            data-scope="openid email"
+            data-scope="openid email profile"
             data-clientid="1002371267276-adq0uqel7m1d0bk80pphi092gfa9qbaa.apps.googleusercontent.com"
             data-redirecturi="postmessage"
             data-accesstype="offline"
@@ -52,7 +52,7 @@ function signInCallback(authResult) {
           $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
          setTimeout(function() {
           window.location.href = "/restaurant";
-         }, 2000);
+         }, 1000);
 
       } else if (authResult['error']) {
     console.log('There was an error: ' + authResult['error']);
@@ -73,11 +73,11 @@ function signInCallback(authResult) {
 <script>
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '846524132078825',
+    appId      : '128244804437238',
     cookie     : true,  // enable cookies to allow the server to access
                         // the session
     xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.2' // use version 2.2
+    version    : 'v2.8' // use version 2.8
   });
   };
   // Load the SDK asynchronously
@@ -108,7 +108,7 @@ function signInCallback(authResult) {
           $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
          setTimeout(function() {
           window.location.href = "/restaurant";
-         }, 4000);
+         }, 1000);
 
       } else {
         $('#result').html('Failed to make a server-side call. Check your configuration and console.');
