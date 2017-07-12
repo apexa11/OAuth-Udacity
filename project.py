@@ -149,6 +149,7 @@ def getUserId(email):
   except:
     return None
 
+# get user info
 def getUserInfo(user_id):
   user = session.query(User).filter_by(id = user_id).one()
   return user
@@ -259,6 +260,7 @@ def fbconnect():
     flash("Now logged in as %s" % login_session['username'])
     return output
 
+# facebook Disconnect
 @app.route('/fbdisconnect')
 def fbdisconnect():
     facebook_id = login_session['facebook_id']
@@ -268,7 +270,6 @@ def fbdisconnect():
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     return "you have been logged out"
-
 
 #JSON APIs to view Restaurant Information
 @app.route('/restaurant/<int:restaurant_id>/menu/JSON')
@@ -286,7 +287,6 @@ def menuItemJSON(restaurant_id, menu_id):
 def restaurantsJSON():
     restaurants = session.query(Restaurant).all()
     return jsonify(restaurants= [r.serialize for r in restaurants])
-
 
 #Show all restaurants
 @app.route('/')
@@ -313,7 +313,6 @@ def newRestaurant():
   else:
       return render_template('newRestaurant.html')
 
-
 #Edit a restaurant
 @app.route('/restaurant/<int:restaurant_id>/edit/', methods = ['GET', 'POST'])
 def editRestaurant(restaurant_id):
@@ -330,8 +329,6 @@ def editRestaurant(restaurant_id):
             return redirect(url_for('showRestaurants'))
     else:
         return render_template('editRestaurant.html', restaurant=editedRestaurant)
-
-
 
 #Delete a restaurant
 @app.route('/restaurant/<int:restaurant_id>/delete/', methods = ['GET','POST'])
@@ -362,8 +359,6 @@ def showMenu(restaurant_id):
       return render_template('publicmenu.html',items = items , restaurant = restaurant,creator = creator)
     else:
       return render_template('menu.html', items = items, restaurant = restaurant, creator = creator)
-
-
 
 #Create a new menu item
 @app.route('/restaurant/<int:restaurant_id>/menu/new/',methods=['GET','POST'])
@@ -409,7 +404,6 @@ def editMenuItem(restaurant_id, menu_id):
   else:
       return render_template('editmenuitem.html', restaurant_id = restaurant_id, menu_id = menu_id, item = editedItem)
 
-
 #Delete a menu item
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods = ['GET','POST'])
 def deleteMenuItem(restaurant_id,menu_id):
@@ -430,34 +424,24 @@ def deleteMenuItem(restaurant_id,menu_id):
       return render_template('deleteMenuItem.html', item = itemToDelete)
 
 # Disconnect based on provider
+
 @app.route('/disconnect')
 def disconnect():
     if 'provider' in login_session:
         if login_session['provider'] == 'google':
             gdisconnect()
-            del login_session['gplus_id']
-            del login_session['credentials']
-            del login_session['username']
-            del login_session['email']
-            del login_session['picture']
+            login_session.clear()
+            flash("You have successfully been logged out.")
+            return redirect(url_for('showRestaurants'))
         if login_session['provider'] == 'facebook':
             fbdisconnect()
-            del login_session['facebook_id']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
-        del login_session['user_id']
-        del login_session['provider']
+            login_session.clear()
+        login_session.clear()
         flash("You have successfully been logged out.")
         return redirect(url_for('showRestaurants'))
     else:
         flash("You were not logged in")
         return redirect(url_for('showRestaurants'))
-
-
-
-
-
 
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
