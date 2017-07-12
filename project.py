@@ -110,6 +110,7 @@ def gconnect():
 
     data = json.loads(answer.text)
 
+    login_session['provider'] = 'provider'
     login_session['username'] = data["name"]
     login_session['picture'] = data["picture"]
     login_session['email'] = data["email"]
@@ -436,6 +437,9 @@ def disconnect():
             gdisconnect()
             del login_session['gplus_id']
             del login_session['credentials']
+            del login_session['username']
+            del login_session['email']
+            del login_session['picture']
         if login_session['provider'] == 'facebook':
             fbdisconnect()
             del login_session['facebook_id']
