@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem, User
 
-#New imports for google sign-in
+#New imports for google -in
 from flask import session as login_session
 import random , string
 
