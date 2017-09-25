@@ -1,8 +1,6 @@
 * {
 
 	font-weight: 700;
-
-
 }
 
 h1 {
@@ -10,7 +8,6 @@ h1 {
 	font-size: 70px;
 	color:#F8FCF5;
 	text-align: center;
-
 }
 
 h2 {
@@ -81,6 +78,10 @@ h3 {
 	padding: 5px;
 	border-radius: 7px;
 	background-color: #657FF3;
+	border-color:#657FF3;
+}
+.logbtn:hover{
+    border-color: #709FF6;
 }
 
 .glyphicon {
@@ -185,9 +186,31 @@ h3 {
 .Button{
 	margin-right:100px;
 }
-.logbtn{
+.loginbtn{
+padding: 7px 15px ;
+border-color: #3276b1;
+background-color: #3276b1;
+color: white;
+margin-top: -2px;
+}
+.loginbtn:hover{
 
+border-color:#709FF6;
 }
 .logoutbtn{
-	
+padding: 6px;
+border-color: #3276b1;
+background-color: #3276b1;
+color: white;
+}
+.showbtn{
+padding: 6px;
+color: white;
+border-color: #87868B;
+background-color: #87868B;
+}
+.showbtn:hover{
+	background-color:#79797C;
+	color: white;
+	border-color:#7F7F82; 
 }
