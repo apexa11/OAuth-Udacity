@@ -421,7 +421,7 @@ def deleteMenuItem(restaurant_id,menu_id):
       flash('Menu Item Successfully Deleted')
       return redirect(url_for('showMenu', restaurant_id = restaurant_id))
   else:
-      return render_template('deleteMenuItem.html', item = itemToDelete)
+      return render_template('deletemenuitem.html', item = itemToDelete , restautant_id = restaurant_id , menu_id = menu_id)
 
 # Disconnect based on provider
 
