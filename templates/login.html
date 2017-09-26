@@ -9,19 +9,21 @@
 <script src="//apis.google.com/js/platform.js?onload=start"> </script>
 
 <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
 </head>
 
+<div style="background-color: black; width: 60%; min-width: 275px; margin: 0 auto; padding-top: 2rem; min-height: 275px; background: linear-gradient(to right, #007991, #78ffd6); box-shadow: 5px 5px 5px #4d4d4d;">
+<h1 class="loginpage" style="color: white; font-family: 'Ubuntu', sans-serif; margin: 0.5rem;"> Sign In to My Restaurant </h1>
+<br>
 
-<body>
-
+<body style="margin: 0 auto; width: 75%; text-align: center; align-items: center; align-content: center; margin-top: 10%; background: linear-gradient(to right, #1a2980, #26d0ce);">
 
 <!-- GOOGLE PLUS SIGN IN-->
 
-
-          <div id="signInButton ">
-          <span class="g-signin Button"
+        
+          <div id="signInButton">
+          <span class="g-signin Button Gbtn"
             data-scope="openid email profile"
             data-clientid="1002371267276-adq0uqel7m1d0bk80pphi092gfa9qbaa.apps.googleusercontent.com"
             data-redirecturi="postmessage"
@@ -31,9 +33,10 @@
             data-approvalprompt="force">
           </span>
         </div>
-
-<div id="result"> </div>
-
+    
+<br>
+<h3 id="result" style="color: white; font-family: 'Ubuntu', sans-serif; margin: 1px 0;"> ------- OR ------- </h3>
+<br>
 <script>
 function signInCallback(authResult) {
   if (authResult['code']) {
@@ -121,16 +124,12 @@ function signInCallback(authResult) {
 </script>
 
 
-<button>
+<button style="padding: 0; border-width: 0;">
+  <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();" >
+  <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
 
-
-          <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
-<a href='javascript:sendTokenToServer()'>Login with Facebook</a>
-
-</fb:login-button>
-
-
-        </button>
+  </fb:login-button>
+</button>
 
 
 
@@ -139,5 +138,5 @@ function signInCallback(authResult) {
 
 
   </body>
-
+</div>
   </html>
