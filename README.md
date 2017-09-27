@@ -1,4 +1,7 @@
-# OAuth2.0
+# Restaurant App OAuth2.0
+
+You can checkout my live App here: http://13.59.131.173/
+
 Starter Code for Auth&amp;Auth course
 # Installing the Vagrant VM for ud330 - Authentication & Authorization
 
